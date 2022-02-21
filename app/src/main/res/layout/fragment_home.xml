@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_layout"
+    tools:context=".ui.home.HomeFragment">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/layout_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_current_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="24sp"
+                    android:textFontWeight="400"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/txt_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto_regular"
+                    android:layout_alignParentEnd="true"
+                    android:textFontWeight="400"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="center"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    >
+
+                    <TextView
+                        android:id="@+id/txt_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_alignParentEnd="true"
+                        android:textSize="24sp"
+                        android:textFontWeight="400"
+                        android:layout_marginStart="5dp"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_clipboard"
+                        android:layout_marginStart="10dp"
+                        />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/btn_hochu_est"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button"
+                    android:clickable="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:focusable="true">
+
+                    <TextView
+                        android:id="@+id/txt_eda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="43dp"
+                        android:layout_marginVertical="11dp"
+                        android:textColor="@color/white"
+                        android:textSize="24sp" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:id="@+id/txt_bonus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="29dp"
+                        android:layout_marginVertical="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_below="@id/layout_top"
+                android:layout_above="@id/layout_bottom"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_marginHorizontal="42dp"
+                android:layout_marginVertical="10dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/layout_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginBottom="15dp">
+
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="54dp"
+                    android:src="@drawable/logo"
+                    android:layout_marginBottom="20dp"/>
+
+                <TextView
+                    android:id="@+id/txt_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textFontWeight="400"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:id="@+id/pbDog"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

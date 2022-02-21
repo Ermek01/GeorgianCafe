@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="7dp"
+    android:layout_marginEnd="7dp"
+    android:layout_marginBottom="15dp">
+
+    <ImageView
+        android:id="@+id/img_dishes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:layout_alignTop="@id/img"
+        android:layout_alignStart="@id/img"
+        android:layout_alignBottom="@id/img"
+        android:layout_alignEnd="@id/img"/>
+
+    <RelativeLayout
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        android:background="@drawable/bg_img_dishes"/>
+
+    <TextView
+        android:id="@+id/txt_dishes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
+        android:textFontWeight="400"
+        android:textSize="12sp"
+        android:layout_below="@id/img_dishes"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:layout_alignStart="@id/img_dishes"
+        android:layout_alignEnd="@id/img_dishes"
+        android:textAlignment="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:id="@+id/txt_weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_regular"
+        android:textFontWeight="400"
+        android:textSize="12sp"
+        android:layout_below="@id/txt_dishes"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:layout_alignStart="@id/img_dishes"
+        android:layout_alignEnd="@id/img_dishes"
+        android:textAlignment="center"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignStart="@id/img_dishes"
+        android:layout_alignEnd="@id/img_dishes"
+        android:layout_below="@id/txt_weight"
+        android:layout_marginTop="15dp">
+
+        <RelativeLayout
+            android:id="@+id/layout"
+            android:layout_width="85dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/bg_dishes">
+
+            <RelativeLayout
+                android:id="@+id/btn_plus"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/bg_btn_plus">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add_btn"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/btn_minus"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_btn_plus">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_minus"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_total"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toStartOf="@id/btn_plus"
+                android:layout_toEndOf="@id/btn_minus"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="0"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/layout"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_regular"
+            android:maxLines="1"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
