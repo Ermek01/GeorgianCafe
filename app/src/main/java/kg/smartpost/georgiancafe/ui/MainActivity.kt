@@ -11,8 +11,11 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kg.smartpost.georgiancafe.BuildConfig
@@ -23,6 +26,9 @@ import kg.smartpost.georgiancafe.databinding.ActivityMainBinding
 import kg.smartpost.georgiancafe.ui.category.utils.MenuCategoriesRecyclerViewAdapter
 import kg.smartpost.georgiancafe.ui.category.viewmodels.CategoryViewModel
 import kg.smartpost.georgiancafe.ui.utils.EventListener
+import kg.smartpost.georgiancafe.utils.MyState
+import kg.smartpost.georgiancafe.utils.NetworkStatusTracker
+import kg.smartpost.georgiancafe.utils.NetworkStatusViewModel
 
 
 @AndroidEntryPoint
@@ -35,6 +41,18 @@ class MainActivity : AppCompatActivity(), MenuCategoriesRecyclerViewAdapter.Cate
 
     private val page = "menu"
 
+    private val viewModel: NetworkStatusViewModel by lazy {
+        ViewModelProvider(
+            this,
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    val networkStatusTracker = NetworkStatusTracker(this@MainActivity)
+                    return NetworkStatusViewModel(networkStatusTracker) as T
+                }
+            },
+        ).get(NetworkStatusViewModel::class.java)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +62,14 @@ class MainActivity : AppCompatActivity(), MenuCategoriesRecyclerViewAdapter.Cate
         val versionName = BuildConfig.VERSION_NAME
         binding.txtVersion.text = "Версия: $versionName"
 
-        getCategories()
+        viewModel.state.observe(this) { state ->
+            when (state) {
+                MyState.Fetched -> getCategories()
+                MyState.Error -> "Error"
+            }
+        }
+
+
 
         binding.appBarMain.btnMenu.setOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
@@ -52,6 +77,16 @@ class MainActivity : AppCompatActivity(), MenuCategoriesRecyclerViewAdapter.Cate
 
         binding.txtLogout.setOnClickListener {
 
+        }
+
+        binding.btnHome.setOnClickListener {
+            val navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
+            if (navController().currentDestination?.id != R.id.homeFragment) {
+                navController.popBackStack()
+            }
+            Handler().postDelayed({
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+            }, 200)
         }
 
         binding.categoryList.addItemDecoration(

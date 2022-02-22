@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.flexbox.*
 import dagger.hilt.android.AndroidEntryPoint
 import kg.smartpost.georgiancafe.data.local.UserPreferencesViewModel
@@ -17,6 +19,9 @@ import kg.smartpost.georgiancafe.ui.category.viewmodels.CategoryViewModel
 import kg.smartpost.georgiancafe.ui.dishes.utils.CategoryRecyclerViewAdapter
 import kg.smartpost.georgiancafe.ui.dishes.utils.DishesRecyclerViewAdapter
 import kg.smartpost.georgiancafe.ui.dishes.viewmodels.DishesViewModel
+import kg.smartpost.georgiancafe.utils.MyState
+import kg.smartpost.georgiancafe.utils.NetworkStatusTracker
+import kg.smartpost.georgiancafe.utils.NetworkStatusViewModel
 
 @AndroidEntryPoint
 class DishesFragment : Fragment(), CategoryRecyclerViewAdapter.CategoryClickListener {
@@ -32,6 +37,18 @@ class DishesFragment : Fragment(), CategoryRecyclerViewAdapter.CategoryClickList
     var dishes = mutableListOf<ModelDishes.CatDish.Dishes>()
 
     private var hochu_cat: Int? = -1
+
+    private val viewModel: NetworkStatusViewModel by lazy {
+        ViewModelProvider(
+            this,
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    val networkStatusTracker = NetworkStatusTracker(requireContext())
+                    return NetworkStatusViewModel(networkStatusTracker) as T
+                }
+            },
+        ).get(NetworkStatusViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +69,30 @@ class DishesFragment : Fragment(), CategoryRecyclerViewAdapter.CategoryClickList
             hochu_cat = arguments?.getInt("hochu_cat")
         }
 
-        getDishes()
+        viewModel.state.observe(this) { state ->
+            when (state) {
+                MyState.Fetched -> getDishes()
+                MyState.Error -> Toast.makeText(
+                    requireContext(),
+                    "Нет подключения к интернету!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+
 
         binding.swipeRefresh.setOnRefreshListener {
-            getDishes()
+            viewModel.state.observe(this) { state ->
+                when (state) {
+                    MyState.Fetched -> getDishes()
+                    MyState.Error -> Toast.makeText(
+                        requireContext(),
+                        "Нет подключения к интернету!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
 
     }
@@ -68,7 +105,6 @@ class DishesFragment : Fragment(), CategoryRecyclerViewAdapter.CategoryClickList
                     dishes.data?.let { dishes ->
                         this.dishes.clear()
                         this.dishes.addAll(dishes.cat_dish.dishes)
-
                         val categoryAdapter = CategoryRecyclerViewAdapter(hochu_cat, this)
                         val layoutManager = FlexboxLayoutManager(requireContext())
                         layoutManager.justifyContent = JustifyContent.CENTER

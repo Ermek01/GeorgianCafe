@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kg.smartpost.georgiancafe.R
@@ -18,6 +20,9 @@ import kg.smartpost.georgiancafe.data.network.NetworkResponse
 import kg.smartpost.georgiancafe.databinding.FragmentHomeBinding
 import kg.smartpost.georgiancafe.ui.utils.EventListener
 import kg.smartpost.georgiancafe.ui.viewmodel.DataViewModel
+import kg.smartpost.georgiancafe.utils.MyState
+import kg.smartpost.georgiancafe.utils.NetworkStatusTracker
+import kg.smartpost.georgiancafe.utils.NetworkStatusViewModel
 import kg.smartpost.georgiancafe.utils.hasInternetConnection
 
 @AndroidEntryPoint
@@ -35,6 +40,18 @@ class HomeFragment : Fragment() {
     private var hochu_cat = -1
     private var phone = ""
 
+    private val viewModel: NetworkStatusViewModel by lazy {
+        ViewModelProvider(
+            this,
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    val networkStatusTracker = NetworkStatusTracker(requireContext())
+                    return NetworkStatusViewModel(networkStatusTracker) as T
+                }
+            },
+        ).get(NetworkStatusViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -50,27 +67,27 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (hasInternetConnection(requireContext())) {
-            getData()
-        }
-        else {
-            Toast.makeText(
-                requireContext(),
-                "Нет подключения к интернету!",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        binding.swipeRefresh.setOnRefreshListener {
-            if (hasInternetConnection(requireContext())) {
-                getData()
-            }
-            else {
-                Toast.makeText(
+        viewModel.state.observe(this) { state ->
+            when (state) {
+                MyState.Fetched -> getData()
+                MyState.Error -> Toast.makeText(
                     requireContext(),
                     "Нет подключения к интернету!",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+        }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.state.observe(this) { state ->
+                when (state) {
+                    MyState.Fetched -> getData()
+                    MyState.Error -> Toast.makeText(
+                        requireContext(),
+                        "Нет подключения к интернету!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
 
@@ -107,6 +124,8 @@ class HomeFragment : Fragment() {
                         binding.txtCurrentDiscount.text = data.user.title
                         binding.txtEda.text = data.user.eda
                         binding.txtBonus.text = data.user.bonusi
+                        binding.txtEda.textSize = data.user.size_hochu.toFloat()
+                        binding.txtBonus.textSize = data.user.size_bonusi.toFloat()
                         binding.swipeRefresh.isRefreshing = false
                         binding.text.text = data.user.text
                         binding.text.textSize = data.user.text_size.toFloat()

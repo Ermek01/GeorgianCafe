@@ -31,7 +31,9 @@ class DishesRecyclerViewAdapter :
 
     inner class ViewHolderCat(private val binding: ItemDishesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("UseCompatLoadingForDrawables", "ResourceAsColor", "ResourceType")
+        @SuppressLint("UseCompatLoadingForDrawables", "ResourceAsColor", "ResourceType",
+            "SetTextI18n"
+        )
         fun onBind(position: Int) {
             val current = getItemAtPos(position)
 
@@ -42,20 +44,34 @@ class DishesRecyclerViewAdapter :
 
             binding.txtDishes.text = "${current.name}"
             binding.txtWeight.text = "${current.weight} ${current.edinic}"
-            binding.txtCost.text = "${current.cost} руб."
+            binding.txtCost.text = "${current.cost}"
 
             binding.btnPlus.setOnClickListener {
                 var total = binding.txtTotal.text.toString().toInt()
-                total++
+                if (total == 0) {
+                    total += current.min.toInt()
+                } else {
+                    total++
+                }
+                var cost = current.cost.toInt()
+                cost *= total
+                binding.txtCost.text = "$cost"
                 binding.txtTotal.text = total.toString()
             }
 
             binding.btnMinus.setOnClickListener {
                 var total = binding.txtTotal.text.toString().toInt()
-                if (total != 0) {
-                    total--
-                    binding.txtTotal.text = total.toString()
+                var cost = current.cost.toInt()
+                if (total == current.min.toInt()) {
+                    total = 0
+                } else {
+                    if (total != 0) {
+                        total--
+                        cost *= total
+                    }
                 }
+                binding.txtCost.text = cost.toString()
+                binding.txtTotal.text = total.toString()
 
             }
 
@@ -78,7 +94,10 @@ class DishesRecyclerViewAdapter :
 
     companion object {
         private val DIFF = object : DiffUtil.ItemCallback<ModelDishes.CatDish.Dishes>() {
-            override fun areItemsTheSame(oldItem: ModelDishes.CatDish.Dishes, newItem: ModelDishes.CatDish.Dishes): Boolean {
+            override fun areItemsTheSame(
+                oldItem: ModelDishes.CatDish.Dishes,
+                newItem: ModelDishes.CatDish.Dishes
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
 

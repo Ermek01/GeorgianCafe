@@ -11,16 +11,18 @@
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/drawable/bg_layout.xml" value="0.21388888888888888" />
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/drawable/bg_toolbar.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/drawable/ic_add_btn.xml" value="0.25555555555555554" />
-        <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/activity_main.xml" value="0.152" />
+        <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/app_bar_main.xml" value="0.2" />
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/content_main.xml" value="0.144" />
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/fragment_dishes.xml" value="0.152" />
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/fragment_home.xml" value="0.1265625" />
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/item_category.xml" value="1.2" />
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/item_category_menu.xml" value="0.176" />
-        <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/item_dishes.xml" value="0.2" />
+        <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/item_dishes.xml" value="0.264" />
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/layout/item_floors_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14583333333333334" />
+        <entry key="..\:/Users/ermek/AndroidStudioProjects/GeorgianCage/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.14583333333333334" />
       </map>
     </option>
   </component>
